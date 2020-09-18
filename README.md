@@ -64,5 +64,6 @@ The output is useful for explaining CRM modelling. Things to notice:
 
 * box colours follow current conventions in the CRM community
 * boxes include instances and classes
+* Arrows connect instances as opposed to classes
 * instances, classes and properties include URIs
 * easily expandable to include CRM extensions or different CRM versions
