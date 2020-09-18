@@ -17,7 +17,7 @@ Example:
 ```commandline
 python crmviz -f png my-triples.rdf
 ```
-This will produce two files: `my-triples.gv` and `my-triples.gv.sgv`.
+This will produce two files: `my-triples.gv` and `my-triples.gv.png`. If no `-f` is specified then it will produce svg by default.
 
 ## Python use 
 
@@ -64,6 +64,6 @@ The output is useful for explaining CRM modelling. Things to notice:
 
 * box colours follow current conventions in the CRM community
 * boxes include instances and classes
-* Arrows connect instances as opposed to classes
+* arrows connect instances as opposed to classes
 * instances, classes and properties include URIs
 * easily expandable to include CRM extensions or different CRM versions
