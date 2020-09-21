@@ -4,20 +4,22 @@ Python command line tool and library for visualising RDF triples for datasets ma
 * [rdflib](https://rdflib.readthedocs.io/en/stable/)
 * [graphviz](https://pypi.org/project/graphviz/)
 
-CRM version out-of-the-box: 6.2.1
+Supported CRM versions:
+* CRM official: [6.2.1](http://www.cidoc-crm.org/sites/default/files/cidoc_crm_v6.2.1-2018April.rdfs)
+* Erlangen CRM: [current](http://erlangen-crm.org/ontology/ecrm/ecrm_current.owl)
 
 ## Command line use
 
 ```commandline
-python crmviz -f <format> [file]
+python crmviz.py -v <crm_version> -f <format> [file]
 ```
 
 Example:
 
 ```commandline
-python crmviz -f png my-triples.rdf
+python crmviz.py -v 'erlangen' -f 'png' my-triples.rdf
 ```
-This will produce two files: `my-triples.gv` and `my-triples.gv.png`. If no `-f` is specified then it will produce svg by default.
+This will produce two files: `my-triples.gv` and `my-triples.gv.png` using the labels and URIs from Erlangen CRM current. If no `-f` is specified then it will produce svg by default. If no `-v` is specified, then it will default to `forth` and the official CRM version is used. It makes sense to use the CRM version also used in your sample.
 
 ## Python use 
 
@@ -28,7 +30,7 @@ from visualise import visualise_graph # import the library
 graph = Graph() # create a new graph
 graph.add((subject, predicate, object)) # add triples manually 
 graph.parse(file.rdf) # or parse an existing file
-dot = visualise_graph(graph, 'CRMVIZ graph') # run the visualisation
+dot = visualise_graph(graph, 'CRMVIZ graph', 'forth') # run the visualisation
 dot.render(exportfile + '.gv',format='svg') # export in default svg
 ```
 

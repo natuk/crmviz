@@ -5,12 +5,15 @@ from rdflib.namespace import SKOS, RDF, RDFS
 import rdflib.term
 import uuid
 
-def visualise_graph(graph, comment):
+def visualise_graph(graph, comment, crmversion):
     # graph is the rdflib graph being visualised and dot is the graphviz Digraph of the visualisation
 
     # load the CIDOC-CRM rdf rules
     crmgraph = Graph()
-    crmgraph.parse("cidoc-crm-6.2.1.rdfs")
+    if crmversion == "erlangen":
+        crmgraph.parse("ecrm_current.owl.rdf")
+    else:
+        crmgraph.parse("cidoc-crm-6.2.1.rdfs")
 
     # load the typed properties
     crmtpgraph = Graph()
@@ -73,8 +76,11 @@ def visualise_graph(graph, comment):
             continue
 
         if type(obj) is rdflib.Literal:
+            sane_obj = str(obj)
+            if len(sane_obj) > 30:
+                sane_obj = sane_obj[0:27] + "..."
             objlabel = '<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">\
-                        <TR><TD PORT="instance" CELLPADDING="10" bgcolor="white"><FONT FACE="Ubuntu">' + str(obj) + '</FONT><BR /><FONT FACE="FreeMono" POINT-SIZE="8">Literal</FONT></TD></TR>\
+                        <TR><TD PORT="instance" CELLPADDING="10" bgcolor="white"><FONT FACE="Ubuntu">' + sane_obj + '</FONT><BR /><FONT FACE="FreeMono" POINT-SIZE="8">Literal</FONT></TD></TR>\
                         </TABLE>>'
 
             #nodes[objgnode] = objlabel
@@ -112,7 +118,14 @@ def get_doccolour(entitylabel, crmgraph):
         "Time-span": '#ddfffe',
         "Type": '#FAB565',
         "rdftype": "#fff",
-        "Conceptual Object": "#fffa40"
+        "Conceptual Object": "#fffa40",
+        "Physical Thing": '#E1BA9C', # repeat for erlangen labels
+        "E5 Event": '#96e0f6',
+        "E53 Place": '#aff090',
+        "E39 Actor": '#FFBDCA',
+        "E52 Time-span": '#ddfffe',
+        "E55 Type": '#FAB565',
+        "E28 Conceptual Object": "#fffa40"
     }
 
     if entitylabel in doccolour: # if the entity itself has a colour then use it

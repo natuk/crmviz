@@ -8,9 +8,10 @@ import os.path as path
 p = optparse.OptionParser(
     description='Visualises RDF triples of datasets based on the CRM ontology (version 6.2.1) for documentation purposes.',
     prog='crmviz',
-    usage='%prog -f <format> [file]'
+    usage='%prog -v <crm_version> -f <format> [file]'
 )
 p.add_option('--format', '-f', help="Choose the output image format. Supports 'svg' 'png' 'pdf' (svg default)")
+p.add_option('--crmversion', '-v', help="Choose the CRM version to use. Supports 'erlangen' 'forth' (forth default)")
 
 options, arguments = p.parse_args() # parse the arguments
 
@@ -24,7 +25,10 @@ if len(arguments) == 1: # if a filename has been given
         p.print_help()
         sys.exit(-1)
 
-    dot = visualise_graph(graph, 'CRMVIZ graph for file ' + arguments[0]) # run the visualisation
+    if (options.crmversion):  # check the requested format
+        dot = visualise_graph(graph, 'CRMVIZ graph for file ' + arguments[0], options.crmversion) # run the visualisation with given option
+    else:
+        dot = visualise_graph(graph, 'CRMVIZ graph for file ' + arguments[0], 'forth')  # run the visualisation with forth version of CRM
     exportfilename = path.splitext(arguments[0])[0] # get the filename without the extension
 
     if (options.format): # check the requested format
