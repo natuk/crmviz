@@ -5,8 +5,12 @@ Python command line tool and library for visualising RDF triples for datasets ma
 * [graphviz](https://pypi.org/project/graphviz/)
 
 Supported CRM versions:
-* CRM official: [6.2.1](http://www.cidoc-crm.org/sites/default/files/cidoc_crm_v6.2.1-2018April.rdfs)
+* CRM official: [6.2.1](http://www.cidoc-crm.org/sites/default/files/cidoc_crm_v6.2.1-2018April.rdfs) (default)
 * Erlangen CRM: [current](http://erlangen-crm.org/ontology/ecrm/ecrm_current.owl)
+
+Supported formats (from graphviz):
+* svg (default)
+* png
 
 ## Command line use
 
@@ -14,10 +18,14 @@ Supported CRM versions:
 python crmviz.py -v <crm_version> -f <format> [file]
 ```
 
-Example:
+Examples:
+```commandline
+python crmviz.py my-triples.rdf
+```
+This will run with default options and produce two files: `my-triples.gv` and `my-triples.gv.svg` using the labels and URIs from the official CIDOC-CRM (version 6.2.1).
 
 ```commandline
-python crmviz.py -v 'erlangen' -f 'png' my-triples.rdf
+python crmviz.py -v erlangen -f png my-triples.rdf
 ```
 This will produce two files: `my-triples.gv` and `my-triples.gv.png` using the labels and URIs from Erlangen CRM current. If no `-f` is specified then it will produce svg by default. If no `-v` is specified, then it will default to `forth` and the official CRM version is used. It makes sense to use the CRM version also used in your sample.
 
