@@ -59,6 +59,11 @@ def visualise_graph(graph, comment, crmversion):
             except:
                 objlabel = str(obj)
 
+            if len(subjlabel) > 30:
+                subjlabel = subjlabel[0:27] + "..."
+            if len(objlabel) > 30:
+                objlabel = objlabel[0:27] + "..."
+
             subjuri = get_prefix_uri(uniongraph, subj)
             objuri = get_prefix_uri(uniongraph, obj)
 
