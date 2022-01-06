@@ -13,7 +13,7 @@ def visualise_graph(graph, comment, crmversion):
     if crmversion == "erlangen":
         crmgraph.parse("ecrm_current.owl.rdf")
     else:
-        crmgraph.parse("cidoc-crm-6.2.1.rdfs")
+        crmgraph.parse("cidoc-crm-6.2.1.rdfs",None,"xml")
 
     # load the typed properties
     crmtpgraph = Graph()
@@ -59,9 +59,9 @@ def visualise_graph(graph, comment, crmversion):
             except:
                 objlabel = str(obj)
 
-            if len(subjlabel) > 30:
+            if len(subjlabel) > 50:
                 subjlabel = subjlabel[0:27] + "..."
-            if len(objlabel) > 30:
+            if len(objlabel) > 50:
                 objlabel = objlabel[0:27] + "..."
 
             subjuri = get_prefix_uri(uniongraph, subj)
