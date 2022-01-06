@@ -4,20 +4,25 @@ from rdflib.namespace import SKOS, RDF, RDFS
 #from namespaces import get_prefix_uri
 import rdflib.term
 import uuid
+import os
 
-def visualise_graph(graph, comment, crmversion):
+def visualise_graph(graph: object, comment: object, crmversion: object) -> object:
     # graph is the rdflib graph being visualised and dot is the graphviz Digraph of the visualisation
 
     # load the CIDOC-CRM rdf rules
+
+    # find local path
+    file_path = os.path.dirname(__file__)
+
     crmgraph = Graph()
     if crmversion == "erlangen":
-        crmgraph.parse("ecrm_current.owl.rdf")
+        crmgraph.parse(file_path + "/ecrm_current.owl.rdf")
     else:
-        crmgraph.parse("cidoc-crm-6.2.1.rdfs",None,"xml")
+        crmgraph.parse(file_path + "/cidoc-crm-6.2.1.rdfs",None,"xml")
 
     # load the typed properties
     crmtpgraph = Graph()
-    crmtpgraph.parse("CRM-typed-properties.owl")
+    crmtpgraph.parse(file_path + "/CRM-typed-properties.owl")
 
     #merge the three graphs
     uniongraph = graph + crmgraph + crmtpgraph
@@ -59,9 +64,9 @@ def visualise_graph(graph, comment, crmversion):
             except:
                 objlabel = str(obj)
 
-            if len(subjlabel) > 50:
+            if len(subjlabel) > 30:
                 subjlabel = subjlabel[0:27] + "..."
-            if len(objlabel) > 50:
+            if len(objlabel) > 30:
                 objlabel = objlabel[0:27] + "..."
 
             subjuri = get_prefix_uri(uniongraph, subj)
